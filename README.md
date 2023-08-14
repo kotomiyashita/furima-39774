@@ -38,7 +38,7 @@
 - belongs_to :user
 
 
-## comment テーブル
+## comments テーブル
 
 | Column  | Type       | Options                        |
 | ------- | ---------- | ------------------------------ |
