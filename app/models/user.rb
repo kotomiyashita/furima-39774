@@ -12,7 +12,7 @@ class User < ApplicationRecord
   validates :date_of_birth, presence: true
 
   with_options presence: true,
-               format: { with: /\A[ぁ-ゔァ-ヴ\p{Ideographic}ａ-ｚＡ-Ｚ０-９]+\z/,
+               format: { with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/,
                          message: 'is invalid. Input full-width characters' } do
     validates :family_name
     validates :first_name
