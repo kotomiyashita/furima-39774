@@ -13,7 +13,7 @@ class ItemsController < ApplicationController
     if @item.save
       redirect_to root_path
     else
-      @item(item_params)
+      @item
       render :new, status: :unprocessable_entity
     end
   end
