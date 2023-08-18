@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
-  before_action :set_tweet, only: [:edit, :show]
+  before_action :set_item, only: [:show, :edit]
   before_action :move_to_session, except: [:index, :show]
+  before_action :move_to_user, only: :edit
 
   def index
     @items = Item.order('created_at DESC')
@@ -22,6 +23,20 @@ class ItemsController < ApplicationController
   def show
   end
 
+  def edit
+    @item = Item.find(params[:id])
+  end
+
+  def update
+    @item = Item.find(params[:id])
+    @item.update(item_params)
+    if @item.save
+      redirect_to root_path
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def item_params
@@ -30,7 +45,7 @@ class ItemsController < ApplicationController
           .merge(user_id: current_user.id)
   end
 
-  def set_tweet
+  def set_item
     @item = Item.find(params[:id])
   end
 
@@ -39,4 +54,12 @@ class ItemsController < ApplicationController
 
     redirect_to new_user_session_path
   end
+
+  def move_to_user
+    @item = Item.find(params[:id])
+    unless user_signed_in? && current_user.id == @item.user.id
+      redirect_to root_path
+    end
+  end
+
 end
