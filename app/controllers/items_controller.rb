@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_action :move_to_session, except: [:index, :show, :search]
 
   def index
+    @items = Item.order("created_at DESC")
   end
 
   def new
