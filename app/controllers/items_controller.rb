@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
-  before_action :move_to_session, except: [:index, :show, :search]
+  before_action :set_tweet, only: [:edit, :show]
+  before_action :move_to_session, except: [:index, :show]
 
   def index
     @items = Item.order('created_at DESC')
@@ -18,12 +19,19 @@ class ItemsController < ApplicationController
     end
   end
 
+  def show
+  end
+
   private
 
   def item_params
     params.require(:item).permit(:title, :description, :category_id, :condition_id, :shipping_fee_id, :prefecture_id,
                                  :estimated_shipping_id, :price, :image)
           .merge(user_id: current_user.id)
+  end
+
+  def set_tweet
+    @item = Item.find(params[:id])
   end
 
   def move_to_session
