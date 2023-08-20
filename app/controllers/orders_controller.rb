@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   before_action :move_to_user, only: [:index, :create]
 
   def index
-    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
+    gon_public
     @order_shippinginfo = OrderShippinginfo.new
   end
 
@@ -15,6 +15,7 @@ class OrdersController < ApplicationController
       @order_shippinginfo.save
       return redirect_to root_path
     else
+      gon_public
       render :index, status: :unprocessable_entity
     end
   end
@@ -42,6 +43,10 @@ class OrdersController < ApplicationController
     if current_user.id == @item.user.id || @item.order.present?
       redirect_to root_path
     end
+  end
+
+  def gon_public
+    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
   end
 
 end
