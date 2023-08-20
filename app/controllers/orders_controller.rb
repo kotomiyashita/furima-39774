@@ -13,7 +13,7 @@ class OrdersController < ApplicationController
     if @order_shippinginfo.valid?
       pay_item
       @order_shippinginfo.save
-      return redirect_to root_path
+      redirect_to root_path
     else
       gon_public
       render :index, status: :unprocessable_entity
@@ -27,11 +27,13 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    params.require(:order_shippinginfo).permit(:postal_code, :prefecture_id, :city, :address, :building, :phone_number).merge(user_id: current_user.id, item_id: @item.id, token: params[:token])
+    params.require(:order_shippinginfo).permit(:postal_code, :prefecture_id, :city, :address, :building, :phone_number).merge(
+      user_id: current_user.id, item_id: @item.id, token: params[:token]
+    )
   end
 
   def pay_item
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
     Payjp::Charge.create(
       amount: @item.price,
       card: order_params[:token],
@@ -40,13 +42,12 @@ class OrdersController < ApplicationController
   end
 
   def move_to_user
-    if current_user.id == @item.user.id || @item.order.present?
-      redirect_to root_path
-    end
+    return unless current_user.id == @item.user.id || @item.order.present?
+
+    redirect_to root_path
   end
 
   def gon_public
-    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
+    gon.public_key = ENV['PAYJP_PUBLIC_KEY']
   end
-
 end

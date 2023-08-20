@@ -33,7 +33,7 @@ RSpec.describe OrderShippinginfo, type: :model do
       it 'postal_codeが半角のハイフンを含んだ正しい形式でないと保存できないこと' do
         @order_shippinginfo.postal_code = '1234567'
         @order_shippinginfo.valid?
-        expect(@order_shippinginfo.errors.full_messages).to include("Postal code is invalid. Enter it as follows (e.g. 123-4567)")
+        expect(@order_shippinginfo.errors.full_messages).to include('Postal code is invalid. Enter it as follows (e.g. 123-4567)')
       end
       it 'prefectureを選択していないと保存できないこと' do
         @order_shippinginfo.prefecture_id = 1
@@ -58,22 +58,22 @@ RSpec.describe OrderShippinginfo, type: :model do
       it 'phone_numberが文字列だと保存できないこと' do
         @order_shippinginfo.phone_number = 'abcdefghij'
         @order_shippinginfo.valid?
-        expect(@order_shippinginfo.errors.full_messages).to include("Phone number is invalid. Input only number")
+        expect(@order_shippinginfo.errors.full_messages).to include('Phone number is invalid. Input only number')
       end
       it 'phone_numberが全角だと保存できないこと' do
         @order_shippinginfo.phone_number = '１２３４５６７８９０'
         @order_shippinginfo.valid?
-        expect(@order_shippinginfo.errors.full_messages).to include("Phone number is invalid. Input only number")
+        expect(@order_shippinginfo.errors.full_messages).to include('Phone number is invalid. Input only number')
       end
       it 'phone_numberが9桁以下だと保存できないこと' do
         @order_shippinginfo.phone_number = '123456789'
         @order_shippinginfo.valid?
-        expect(@order_shippinginfo.errors.full_messages).to include("Phone number is too short (minimum is 10 characters)")
+        expect(@order_shippinginfo.errors.full_messages).to include('Phone number is too short (minimum is 10 characters)')
       end
       it 'phone_numberが12桁以上だと保存できないこと' do
         @order_shippinginfo.phone_number = '123456789012'
         @order_shippinginfo.valid?
-        expect(@order_shippinginfo.errors.full_messages).to include("Phone number is too long (maximum is 11 characters)")
+        expect(@order_shippinginfo.errors.full_messages).to include('Phone number is too long (maximum is 11 characters)')
       end
       it 'userが紐付いていないと保存できないこと' do
         @order_shippinginfo.user_id = nil
