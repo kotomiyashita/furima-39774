@@ -33,7 +33,7 @@
 
     <%= include_gon %>
 
-    <%= form_with model: @order_shippinginfo, url: item_orders_path(id: @item.id), id: 'charge-form', class: 'transaction-form-wrap',local: true do |f| %>
+    <%= form_with model: @order_shippinginfo, url: item_orders_path(id: @item.id), data: {turbo: false}, id: 'charge-form', class: 'transaction-form-wrap',local: true do |f| %>
 
       <%= render 'shared/error_messages', model: f.object %>
 

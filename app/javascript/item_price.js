@@ -9,8 +9,8 @@ document.addEventListener('turbo:load', function item_price() {
       const tax = Math.floor(price * 0.1);
       const profitValue = price - tax;
 
-      addTaxPrice.textContent = tax.toLocaleString();
-      profit.textContent = profitValue.toLocaleString();
+      addTaxPrice.innerHTML = tax.toLocaleString();
+      profit.innerHTML = profitValue.toLocaleString();
     });
   }
 });
